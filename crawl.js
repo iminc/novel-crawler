@@ -38,13 +38,16 @@ async function getBooks({ name, link, spinner, data = [] }) {
     const path = './src/index.json'
     const version = JSON.parse(fs.readFileSync(path).toString())
     const today = new Date().setHours(0, 0, 0, 0)
+    let uptodate = true
 
     for (let type of version.types) {
         if (type.lastUpdateTime === today) {
             continue
         }
 
-        const spinner = ora(` 爬取『 ${type.name} 』共 0 本`).start()
+        uptodate = false
+
+        const spinner = ora(` 收录『 ${type.name} 』共 0 本`).start()
         const startTime = Date.now()
         try {
             const books = await getBooks({ name: type.name, link: type.link, spinner })
@@ -62,4 +65,8 @@ async function getBooks({ name, link, spinner, data = [] }) {
 
     version.lastUpdateTime = Date.now()
     fs.writeFileSync(path, JSON.stringify(version, null, 4))
+
+    if (uptodate) {
+        console.log('✔ version is up-to-date.')
+    }
 })()
