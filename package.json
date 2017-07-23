@@ -1,0 +1,23 @@
+{
+  "name": "novel-crawler",
+  "version": "0.0.1",
+  "description": "A simple example of a novel crawler",
+  "main": "index.js",
+  "scripts": {
+    "init": "node index",
+    "crawl": "node crawl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifzm/novel-crawler.git"
+  },
+  "author": "ifzm",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "ora": "^1.3.0",
+    "shortid": "^2.2.8",
+    "superagent": "^3.5.2",
+    "superagent-charset": "^1.2.0"
+  }
+}
