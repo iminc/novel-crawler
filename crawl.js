@@ -1,5 +1,4 @@
 const fs = require('fs')
-const path = require('path')
 const ora = require('ora')
 const { HOST, getHtml } = require('./util')
 
@@ -18,8 +17,8 @@ async function getBooks({ name, link, spinner, data = [] }) {
             latestChapterLink: $el.find('.name a').eq(0).attr('href'),
             lastUpdateTime: '20' + $el.find('.other small').html()
         })
-        
-        spinner.text = spinner.text.replace(/\d+/, data.length)
+
+        spinner.text = spinner.text.replace(/\d+/, `${data.length}`)
     })
 
     const $next = $('.pages a.next')
@@ -36,21 +35,31 @@ async function getBooks({ name, link, spinner, data = [] }) {
 }
 
 (async () => {
-    let list = JSON.parse(fs.readFileSync('./src/index.json').toString())
+    const path = './src/index.json'
+    const version = JSON.parse(fs.readFileSync(path).toString())
+    const today = new Date().setHours(0, 0, 0, 0)
 
-    for (let dir of list.dirs) {
-        const spinner = ora(` 爬取『 ${dir.name} 』共 0 本.`).start()
+    for (let type of version.types) {
+        if (type.lastUpdateTime === today) {
+            continue
+        }
+
+        const spinner = ora(` 爬取『 ${type.name} 』共 0 本`).start()
+        const startTime = Date.now()
         try {
-            const books = await getBooks({
-                name: dir.name,
-                link: dir.link,
-                spinner
-            })
-            fs.writeFileSync(`./src/${dir.name}/data.json`, JSON.stringify(books, null, 4))
+            const books = await getBooks({ name: type.name, link: type.link, spinner })
+            fs.writeFileSync(`./src/${type.name}/data.json`, JSON.stringify(books, null, 4))
+            type.lastUpdateTime = today
+
+            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
             spinner.succeed()
         } catch (e) {
+            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
             spinner.fail()
-            throw e
+            console.error(e)
         }
     }
+
+    version.lastUpdateTime = Date.now()
+    fs.writeFileSync(path, JSON.stringify(version, null, 4))
 })()
