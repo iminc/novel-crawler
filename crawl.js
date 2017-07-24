@@ -11,7 +11,7 @@ async function getBooks({ name, link, spinner, data = [] }) {
         data.push({
             type: $el.find('.class').html(),
             name: $el.find('.name a').eq(0).html(),
-            author: $el.find('.other').html().replace(/[\s\S]?<small>[\s\S]?.*[\s\S]?<\/small>[\s\S]?/, ''),
+            author: $el.find('.other').html().match(/(.*)<small>/)[1],
             link: $el.find('.name a').eq(0).attr('href'),
             latestChapter: $el.find('.name a').eq(1).html(),
             latestChapterLink: $el.find('.name a').eq(0).attr('href'),
@@ -54,10 +54,10 @@ async function getBooks({ name, link, spinner, data = [] }) {
             fs.writeFileSync(`./src/${type.name}/data.json`, JSON.stringify(books, null, 4))
             type.lastUpdateTime = today
 
-            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
+            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
             spinner.succeed()
         } catch (e) {
-            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
+            spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
             spinner.fail()
             console.error(e)
         }

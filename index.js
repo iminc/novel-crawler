@@ -29,10 +29,10 @@ const { HOST, getHtml } = require('./util')
         fs.writeFileSync('./src/index.html', $.html())
         fs.writeFileSync('./src/index.json', JSON.stringify(version, null, 4))
         
-        spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
+        spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
         spinner.succeed()
     } catch (e) {
-        spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s`
+        spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
         spinner.fail()
         console.error(e)
     }
