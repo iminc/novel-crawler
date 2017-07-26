@@ -1,3 +1,5 @@
+global.Promise = require('bluebird')
+
 const fs = require('fs')
 const ora = require('ora')
 const { HOST, getHtml } = require('./util')
@@ -5,6 +7,8 @@ const { HOST, getHtml } = require('./util')
 !(async () => {
     const spinner = ora(` 收录『 UC书盟小说 』共 0 类`).start()
     const startTime = Date.now()
+
+    !fs.existsSync('./src') && fs.mkdirSync('./src')
 
     try {
         const $ = await getHtml()
@@ -20,7 +24,7 @@ const { HOST, getHtml } = require('./util')
             const name = $(el).html()
             const link = $(el).attr('href')
             const folder = `./src/${name}`
-            !fs.existsSync(folder) && fs.mkdir(folder, err => { throw err })
+            !fs.existsSync(folder) && fs.mkdirSync(folder)
     
             version.types.push({ name, link, lastUpdateTime: 0 })
             spinner.text = spinner.text.replace(/\d+/, `${version.types.length}`)

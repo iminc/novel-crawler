@@ -67,6 +67,6 @@ async function getBooks({ name, link, spinner, data = [] }) {
     fs.writeFileSync(path, JSON.stringify(version, null, 4))
 
     if (uptodate) {
-        console.log('✔ version is up-to-date.')
+        console.log('✔  version is up-to-date.')
     }
 })()
