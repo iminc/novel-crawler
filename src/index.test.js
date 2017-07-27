@@ -3,9 +3,7 @@ const ora = require('ora')
 require('./mongo')(async () => {
     const service = require('./service')
 
-    // await service.init()
-
-    const types = await service.findTypes()
+    const types = await service.init()
     for (let type of types) {
         service.novels = 0
         const spinner = ora(` 收录『 ${type.name} 』共 0 本`).start()

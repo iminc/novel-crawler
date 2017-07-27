@@ -50,6 +50,11 @@ class Service {
     }
 
     async init() {
+        const types = await this.findTypes()
+        if (types.length > 0) {
+            return types
+        }
+
         const spinner = ora(` 收录『 UC书盟小说 』共 0 类`).start()
         const startTime = Date.now()
 
@@ -73,6 +78,7 @@ class Service {
 
             spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
             spinner.succeed()
+            return await this.findTypes()
         } catch (e) {
             spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
             spinner.fail()
@@ -105,7 +111,7 @@ class Service {
         if ($next.length > 0) {
             const link = $next.attr('href')
             await Type.findByIdAndUpdate(type._id, { lastCrawlPage: link }).exec()
-            await this.saveNovels(Object.assign(type, { link }), spinner)
+            await this.saveNovels(Object.assign(type, { lastCrawlPage: link }), spinner)
         }
     }
 }
