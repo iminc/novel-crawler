@@ -90,6 +90,10 @@ class Service {
         return await Type.find()
     }
 
+    async count() {
+        return await Novel.count({})
+    }
+
     async saveNovels(type = {}, spinner) {
         const $ = await this.get(type.lastCrawlPage)
         const $els = $('section .list-lastupdate li').map((i, el) => el).get()
