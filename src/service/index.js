@@ -38,6 +38,14 @@ class Service {
             })
         })
 
+        try {
+            let a = $('.book-info .l em').html()
+            console.error(url)
+        } catch (error) {
+            fs.writeFileSync('./index.html', $.html())
+            throw new Error(url)
+        }
+
         return Object.assign({
             link: url,
             name: $('.book-info .l h1').html(),
@@ -102,7 +110,7 @@ class Service {
             const $el = $(el)
             const link = $el.find('.name a').eq(0).attr('href')
 
-            if (await Novel.find({ link }).count() > 0) {
+            if (link === '' || await Novel.find({ link }).count() > 0) {
                 continue
             }
 
