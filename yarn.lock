@@ -2,6 +2,30 @@
 # yarn lockfile v1
 
 
+"@types/bson@*":
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/@types/bson/download/@types/bson-1.0.3.tgz#6c26f0876bf9d8cbb06edd4019e29354bf3a03e0"
+  dependencies:
+    "@types/node" "*"
+
+"@types/mongodb@*":
+  version "2.2.8"
+  resolved "http://registry.npm.taobao.org/@types/mongodb/download/@types/mongodb-2.2.8.tgz#42c45a9d0b0aa4ab276376adb6c027fff9a2e234"
+  dependencies:
+    "@types/bson" "*"
+    "@types/node" "*"
+
+"@types/mongoose@^4.7.19":
+  version "4.7.19"
+  resolved "http://registry.npm.taobao.org/@types/mongoose/download/@types/mongoose-4.7.19.tgz#140bb59454f8c70dd96cfb390ce70ddd648b514d"
+  dependencies:
+    "@types/mongodb" "*"
+    "@types/node" "*"
+
+"@types/node@*":
+  version "8.0.17"
+  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.0.17.tgz#677bc8c118cfb76013febb62ede1f31d2c7222a1"
+
 "@types/node@^6.0.46":
   version "6.0.85"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-6.0.85.tgz#ec02bfe54a61044f2be44f13b389c6a0e8ee05ae"

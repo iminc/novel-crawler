@@ -102,7 +102,7 @@ class Service {
             const $el = $(el)
             const link = $el.find('.name a').eq(0).attr('href')
 
-            if (await Novel.find({ link }).count() > 0) {
+            if (!link || await Novel.find({ link }).count() > 0) {
                 continue
             }
 

@@ -1,12 +1,2 @@
-interface Type {
-    name: string,
-    link?: string
-}
+import Type from './type'
 
-function test(type: Type) {
-    console.log(type.name)
-}
-
-test({
-    name: '1'
-})

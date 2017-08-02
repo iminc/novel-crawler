@@ -3,8 +3,8 @@ const ora = require('ora')
 require('./mongo')(async () => {
     const service = require('./service')
 
-    console.log(await service.count())
-    return
+    // console.log(await service.count())
+    // return
 
     const types = await service.init()
     for (let type of types) {
