@@ -62,7 +62,6 @@ class Service {
             const $ = await this.get()
             const $types = $('nav a').slice(1, 11).map((i, el) => el).get()
 
-            let i = 1
             for (let el of $types) {
                 const name = $(el).html()
                 const link = $(el).attr('href')
@@ -73,7 +72,7 @@ class Service {
                     lastUpdateTime: Date.now()
                 }).save()
 
-                spinner.text = spinner.text.replace(/\d+/, `${i++}`)
+                spinner.text = spinner.text.replace(/\d+/, `${$(el).index() + 1}`)
             }
 
             spinner.text = `${spinner.text}, 耗时 ${((Date.now() - startTime) / 1000).toFixed(2)}s.`
